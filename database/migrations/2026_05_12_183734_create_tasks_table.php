@@ -15,9 +15,9 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('title');
             $table->text('description')->nullable();
-            $table->boolean('done');
+            $table->boolean('done')->default(false);
             $table->timestamp('due_at')->nullable();
-            $table->boolean('archived');
+            $table->boolean('archived')->default(false);
             $table->timestamps();
         });
     }

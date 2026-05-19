@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->timestamp('start_at');
             $table->timestamp('end_at')->nullable();
-            $table->boolean('archived');
+            $table->boolean('archived')->default(false);
             $table->timestamps();
         });
     }

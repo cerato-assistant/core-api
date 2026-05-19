@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('notes', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->text('content')->nullable();
-            $table->boolean('archived');
+            $table->boolean('archived')->default(false);
             $table->timestamps();
             $table->foreignUuid('category_id')->constrained();
         });
