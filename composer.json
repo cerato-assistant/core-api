@@ -54,6 +54,16 @@
             "@php artisan config:clear --ansi",
             "@php artisan test"
         ],
+        "docker:up": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "docker compose up --build -d"
+        ],
+        "docker:down": [
+            "docker compose down"
+        ],
+        "docker:logs": [
+            "docker compose logs -f"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"

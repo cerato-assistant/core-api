@@ -1,0 +1,44 @@
+name: core-api
+
+services:
+  pgsql:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    ports:
+      - "${FORWARD_DB_PORT:-5434}:5432"
+    environment:
+      POSTGRES_DB: "${DB_DATABASE:-app}"
+      POSTGRES_USER: "${DB_USERNAME:-postgres}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD:-postgres}"
+    volumes:
+      - pgsql-data:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${DB_USERNAME:-postgres} -d ${DB_DATABASE:-app}",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8000}:8000"
+    env_file:
+      - .env
+    environment:
+      DB_HOST: pgsql
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      pgsql:
+        condition: service_healthy
+
+volumes:
+  pgsql-data:
