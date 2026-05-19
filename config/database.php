@@ -3,6 +3,9 @@
 use Illuminate\Support\Str;
 use Pdo\Mysql;
 
+$dbHost = getenv('DB_HOST') !== false ? getenv('DB_HOST') : env('DB_HOST', '127.0.0.1');
+$dbPort = getenv('DB_PORT') !== false ? getenv('DB_PORT') : env('DB_PORT', '5432');
+
 return [
 
     /*
@@ -87,8 +90,8 @@ return [
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DB_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '5432'),
+            'host' => $dbHost,
+            'port' => $dbPort,
             'database' => env('DB_DATABASE', 'laravel'),
             'username' => env('DB_USERNAME', 'root'),
             'password' => env('DB_PASSWORD', ''),
