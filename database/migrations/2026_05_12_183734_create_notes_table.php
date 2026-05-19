@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('notes', function (Blueprint $table) {
-            $table->uuid('id')->unique();
+            $table->uuid('id')->primary();
             $table->text('content')->nullable();
             $table->boolean('archived');
             $table->timestamps();
-            $table->foreignUuid('category_id')->constained();
+            $table->foreignUuid('category_id')->constrained();
         });
     }
 
